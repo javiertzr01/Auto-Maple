@@ -1,10 +1,12 @@
 GitPython==3.1.30
 keyboard==0.13.5
-mss==7.0.1
 numpy==1.24.1
-opencv_python_headless==4.7.0.68
+opencv-python==4.7.0.68
 Pillow==9.4.0
 pygame==2.1.2
+pyTelegramBotAPI==4.9.0
+python-dotenv==0.21.0
 pywin32==305
-tensorflow==2.10.1
+tensorflow==2.10.0
 tensorflow_gpu==2.10.1
+win32gui==221.6
