@@ -1,6 +1,8 @@
 """A module for tracking useful in-game information."""
 import threading
 import time
+from os.path import join, splitext
+import keyboard as kb
 
 import cv2
 import win32gui
@@ -169,7 +171,47 @@ class Capture:
 
         return image
     
-    def record(self, path, fourcc, frame_rate=28, duration=0, x0=X_0, x1=None, y0=Y_0, y1=None):
+    def re_encode(self, path, frames, duration):
+        """
+        Re-encode the video for accurate fps on video
+        Args:
+            path : path to save the file to
+            frame_rate : accurate frame rate
+        """
+        # Input Video
+        input_video = path
+        
+        # Output Video
+        filename, file_extension = splitext(path)
+        output_video = join(filename, "_re-encoded", file_extension)
+        
+        # Open input video
+        cap = cv2.VideoCapture(input_video)
+        
+        # Dimensions of video frame
+        width = int(cap.get(3))
+        height = int(cap.get(4))
+        
+        # Create VideoWriter object to re-encode video
+        fps = frames//duration
+        out = cv2.VideoWriter(output_video, self.fourcc, fps, (width, height))
+        
+        # Read frames from input video
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            
+            # Write frames to output video
+            out.write(frame)
+        
+        # Release resources
+        cap.release()
+        out.release()
+        
+        
+    
+    def record(self, path, frame_rate=28, duration=0, x0=X_0, x1=None, y0=Y_0, y1=None):
         """
         Records the game
         Args:
@@ -195,7 +237,7 @@ class Capture:
         frame_width = x1 - x0
         frame_height = y1 - y0
         
-        out = cv2.VideoWriter(path, fourcc, frame_rate, (frame_width, frame_height))
+        out = cv2.VideoWriter(path, self.fourcc, frame_rate, (frame_width, frame_height))
         
         time_diff = 0
         start = time.time()
@@ -204,7 +246,10 @@ class Capture:
         
         while True:
             if duration == 0:
-                if cv2.waitKey(1) == ord('q'):
+                if kb.is_pressed(config.listener.config['Record Video']):
+                    config.listener.recording = False
+                    print("Stopped Recording (capture.py)")
+                    duration = time.time() - start
                     break
             elif time_diff >= duration:
                 break
@@ -221,6 +266,9 @@ class Capture:
         print(f"Frames collected: {frames}")
         
         out.release()
+
+        # if need to re-encode for smooth picture
+        self.re_encode(path, frames, duration)
         cv2.destroyAllWindows()
             
     def record_rune(self, path, duration):
@@ -237,4 +285,4 @@ class Capture:
         y1 = (height//3) - 30
         x0 = (width//3) + 20
         x1 = (4*width//6) - 30
-        self.record(path, self.fourcc, frame_rate, duration=duration, x0=x0, x1=x1, y0=y0, y1=y1)
+        self.record(path, frame_rate, duration=duration, x0=x0, x1=x1, y0=y0, y1=y1)

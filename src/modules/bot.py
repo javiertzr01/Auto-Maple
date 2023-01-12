@@ -116,7 +116,7 @@ class Bot(Configurable):
 
         print('\nSolving rune:')
         inferences = []
-        fail_count = 0
+        fail_count = 2
         for _ in range(15):
             if fail_count < 2:
                 frame = config.capture.frame
@@ -146,6 +146,7 @@ class Bot(Configurable):
             config.capture.record_rune(path_for_video, duration=duration)
             time.sleep(duration)
             config.telegram.send_rune_video(path_for_video)
+            # TODO: create directory called temp(instead of video) then after send, delete both
             now = time.time()
             while time.time()-now < (12-duration):
                 if len(config.telegram.manual_replies) == 4:

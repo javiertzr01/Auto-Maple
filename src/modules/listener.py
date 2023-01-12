@@ -3,9 +3,11 @@
 import time
 import threading
 import winsound
+from os.path import join
 from datetime import datetime
 
 import keyboard as kb
+import cv2
 
 # pylint: disable=import-error
 from src.common.interfaces import Configurable
@@ -17,7 +19,9 @@ class Listener(Configurable):
     DEFAULT_CONFIG = {
         'Start/stop': 'insert',
         'Reload routine': 'f6',
-        'Record position': 'f7'
+        'Record position': 'f7',
+        'Screenshot': 'f8',
+        # 'Record Video': 'f9'
     }
     BLOCK_DELAY = 1         # Delay after blocking restricted button press
 
@@ -32,6 +36,8 @@ class Listener(Configurable):
         self.block_time = 0
         self.thread = threading.Thread(target=self._main)
         self.thread.daemon = True
+        
+        self.recording = False
 
     def start(self):
         """
@@ -57,6 +63,11 @@ class Listener(Configurable):
                     Listener.reload_routine()
                 elif self.restricted_pressed('Record position'):
                     Listener.record_position()
+                elif kb.is_pressed(self.config['Screenshot']):
+                    Listener.screenshot()
+                # Recording feature not used - Inconsistent
+                # elif kb.is_pressed(self.config['Record Video']) and self.recording is False:
+                #     Listener.record_video()
             time.sleep(0.01)
 
     def restricted_pressed(self, action):
@@ -113,3 +124,31 @@ class Listener(Configurable):
         config.gui.edit.record.add_entry(now, pos)
         print(f'\n[~] Recorded position ({pos[0]}, {pos[1]}) at {now}')
         time.sleep(0.6)
+    
+    @staticmethod
+    def screenshot():
+        # TODO: Make Directory if Screenshots is not available
+        
+        image = config.capture.frame
+        
+        now = datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3] + '.png'
+        path = join('assets', 'Screenshots', now)
+        
+        cv2.imwrite(path, image)
+        
+        print(f"Screenshot saved as {path}")
+        time.sleep(0.6)
+        
+    @staticmethod
+    def record_video():
+        print("Started Recording")
+        config.listener.recording = True
+        now = datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3] + '.mp4'
+        path = join('assets', 'Recordings', now)
+        time.sleep(0.6)
+        
+        config.capture.record(path)
+        
+        print("Stopped Recording (listener.py)")
+        
+        print(f"Recording saved as {path}")
