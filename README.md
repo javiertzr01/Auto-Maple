@@ -184,6 +184,9 @@ Auto Maple has the ability to automatically solve "runes", or in-game arrow key 
     Download <a href="http://ciscobinary.openh264.org/openh264-1.8.0-win32.dll.bz2">h264 codec v1.8.0</a> and extract it to C:\Windows\System32
   </li>
   <li>
+    Add your telegram bot details in .env
+  </li>
+  <li>
     Inside Auto Maple's main directory, open a command prompt and run:
     <pre><code>python -m pip install -r requirements.txt</code></pre>
   </li>

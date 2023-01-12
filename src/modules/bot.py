@@ -46,13 +46,6 @@ class Bot(Configurable):
         self.rune_closest_pos = (0, 0)      # Location of the Point closest to rune
         self.submodules = []
         self.command_book = None            # CommandBook instance
-        # self.module_name = None
-        # self.buff = components.Buff()
-
-        # self.command_book = {}
-        # for c in (components.Wait, components.Walk, components.Fall,
-        #           components.Move, components.Adjust, components.Buff):
-        #     self.command_book[c.__name__.lower()] = c
 
         config.routine = Routine()
 
@@ -128,7 +121,7 @@ class Bot(Configurable):
 
         print('\nSolving rune:')
         inferences = []
-        fail_count = 2
+        fail_count = 0
         for _ in range(15):
             if fail_count < 2:
                 frame = config.capture.frame
@@ -176,77 +169,6 @@ class Bot(Configurable):
             config.gui.settings.update_class_bindings()
         except ValueError:
             pass    # TODO: UI warning popup, say check cmd for errors
-        #
-        # utils.print_separator()
-        # print(f"[~] Loading command book '{basename(file)}':")
-        #
-        # ext = splitext(file)[1]
-        # if ext != '.py':
-        #     print(f" !  '{ext}' is not a supported file extension.")
-        #     return False
-        #
-        # new_step = components.step
-        # new_cb = {}
-        # for c in (components.Wait, components.Walk, components.Fall):
-        #     new_cb[c.__name__.lower()] = c
-        #
-        # # Import the desired command book file
-        # module_name = splitext(basename(file))[0]
-        # target = '.'.join(['resources', 'command_books', module_name])
-        # try:
-        #     module = importlib.import_module(target)
-        #     module = importlib.reload(module)
-        # except ImportError:     # Display errors in the target Command Book
-        #     print(' !  Errors during compilation:\n')
-        #     for line in traceback.format_exc().split('\n'):
-        #         line = line.rstrip()
-        #         if line:
-        #             print(' ' * 4 + line)
-        #     print(f"\n !  Command book '{module_name}' was not loaded")
-        #     return
-        #
-        # # Check if the 'step' function has been implemented
-        # step_found = False
-        # for name, func in inspect.getmembers(module, inspect.isfunction):
-        #     if name.lower() == 'step':
-        #         step_found = True
-        #         new_step = func
-        #
-        # # Populate the new command book
-        # for name, command in inspect.getmembers(module, inspect.isclass):
-        #     new_cb[name.lower()] = command
-        #
-        # # Check if required commands have been implemented and overridden
-        # required_found = True
-        # for command in [components.Buff]:
-        #     name = command.__name__.lower()
-        #     if name not in new_cb:
-        #         required_found = False
-        #         new_cb[name] = command
-        #         print(f" !  Error: Must implement required command '{name}'.")
-        #
-        # # Look for overridden movement commands
-        # movement_found = True
-        # for command in (components.Move, components.Adjust):
-        #     name = command.__name__.lower()
-        #     if name not in new_cb:
-        #         movement_found = False
-        #         new_cb[name] = command
-        #
-        # if not step_found and not movement_found:
-        #     print(f" !  Error: Must either implement both 'Move' and 'Adjust' commands, "
-        #           f"or the function 'step'")
-        # if required_found and (step_found or movement_found):
-        #     self.module_name = module_name
-        #     self.command_book = new_cb
-        #     self.buff = new_cb['buff']()
-        #     components.step = new_step
-        #     config.gui.menu.file.enable_routine_state()
-        #     config.gui.view.status.set_cb(basename(file))
-        #     config.routine.clear()
-        #     print(f" ~  Successfully loaded command book '{module_name}'")
-        # else:
-        #     print(f" !  Command book '{module_name}' was not loaded")
 
     def enter_solution(self, solution):
         for arrow in solution:
