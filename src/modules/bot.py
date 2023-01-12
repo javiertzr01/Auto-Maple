@@ -2,19 +2,14 @@
 
 import threading
 import time
-import inspect
-import importlib
-import traceback
-from os.path import splitext, basename, join
+from os.path import join
 from datetime import datetime
 
-import git
 import cv2
 
 # pylint: disable=import-error
 from src.common import config, utils
 from src.detection import detection
-from src.routine import components
 from src.routine.routine import Routine
 from src.command_book.command_book import CommandBook
 from src.routine.components import Point
@@ -140,7 +135,7 @@ class Bot(Configurable):
             else:
                 self.solve_rune_success = False
                 break
-        
+
         if not self.solve_rune_success:
             config.telegram.waiting_response = True
             dir_path = join('assets','video')
@@ -162,15 +157,20 @@ class Bot(Configurable):
 
     def load_commands(self, file):
         """
-        todo
+        TODO: UI warning popup, say check cmd for errors
         """
         try:
             self.command_book = CommandBook(file)
             config.gui.settings.update_class_bindings()
         except ValueError:
-            pass    # TODO: UI warning popup, say check cmd for errors
+            pass
 
     def enter_solution(self, solution):
+        """
+        Keys in the solution for runes
+        Args:
+            solution (list): A list containing the solutions for the rune arrows
+        """
         for arrow in solution:
             press(arrow, 1, down_time=0.1)
         time.sleep(1)
@@ -188,43 +188,3 @@ class Bot(Configurable):
                 )
                 click(target, button='right')
         self.rune_active = False
-    
-    def update_submodules(self, force=False):
-        """
-        Pulls updates from the submodule repositories. If FORCE is True,
-        rebuilds submodules by overwriting all local changes.
-        """
-
-        utils.print_separator()
-        print('[~] Retrieving latest submodules:')
-        self.submodules = []
-        repo = git.Repo.init()
-        with open('.gitmodules', 'r', encoding="utf8") as file:
-            lines = file.readlines()
-            i = 0
-            while i < len(lines):
-                if lines[i].startswith('[') and i < len(lines) - 2:
-                    path = lines[i + 1].split('=')[1].strip()
-                    url = lines[i + 2].split('=')[1].strip()
-                    self.submodules.append(path)
-                    try:
-                        repo.git.clone(url, path)       # First time loading submodule
-                        print(f" -  Initialized submodule '{path}'")
-                    except git.exc.GitCommandError:
-                        sub_repo = git.Repo(path)
-                        if not force:
-                            sub_repo.git.stash()        # Save modified content
-                        sub_repo.git.fetch('origin', 'main')
-                        sub_repo.git.reset('--hard', 'FETCH_HEAD')
-                        if not force:
-                            try:                # Restore modified content
-                                sub_repo.git.checkout('stash', '--', '.')
-                                print(f" -  Updated submodule '{path}', restored local changes")
-                            except git.exc.GitCommandError:
-                                print(f" -  Updated submodule '{path}'")
-                        else:
-                            print(f" -  Rebuilt submodule '{path}'")
-                        sub_repo.git.stash('clear')
-                    i += 3
-                else:
-                    i += 1

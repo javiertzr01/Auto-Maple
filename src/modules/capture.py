@@ -25,8 +25,8 @@ BORDER_PIXELS = 8
 TITLEBAR_PIXELS = 30
 
 # Start point(Offset) of screenshot
-x_0 = BORDER_PIXELS
-y_0 = TITLEBAR_PIXELS
+X_0 = BORDER_PIXELS
+Y_0 = TITLEBAR_PIXELS
 
 # The top-left and bottom-right corners of the minimap
 MM_TL_TEMPLATE = cv2.imread('assets/minimap_tl_template.png', 0)
@@ -84,15 +84,15 @@ class Capture:
             self.frame = self.screenshot()
             if self.frame is None:
                 continue
-            tl, _ = utils.single_match(self.frame, MM_TL_TEMPLATE)
-            _, br = utils.single_match(self.frame, MM_BR_TEMPLATE)
+            top_left, _ = utils.single_match(self.frame, MM_TL_TEMPLATE)
+            _, bottom_right = utils.single_match(self.frame, MM_BR_TEMPLATE)
             mm_tl = (
-                tl[0] + MINIMAP_BOTTOM_BORDER,
-                tl[1] + MINIMAP_TOP_BORDER
+                top_left[0] + MINIMAP_BOTTOM_BORDER,
+                top_left[1] + MINIMAP_TOP_BORDER
             )
             mm_br = (
-                max(mm_tl[0] + PT_WIDTH, br[0] - MINIMAP_BOTTOM_BORDER),
-                max(mm_tl[1] + PT_HEIGHT, br[1] - MINIMAP_BOTTOM_BORDER) #487vs476
+                max(mm_tl[0] + PT_WIDTH, bottom_right[0] - MINIMAP_BOTTOM_BORDER),
+                max(mm_tl[1] + PT_HEIGHT, bottom_right[1] - MINIMAP_BOTTOM_BORDER) #487vs476
             )
             self.minimap_ratio = (mm_br[0] - mm_tl[0]) / (mm_br[1] - mm_tl[1])
             self.minimap_sample = self.frame[mm_tl[1]:mm_br[1], mm_tl[0]:mm_br[0]]
@@ -131,6 +131,11 @@ class Capture:
                 time.sleep(0.001)
 
     def screenshot(self):
+        """
+        Takes a screenshot of the game
+        Returns:
+            image : a cv2 accessible numpy array
+        """
         hwnd = win32gui.FindWindow(None, 'MapleStory')
         wDC = win32gui.GetWindowDC(hwnd)
 
@@ -149,7 +154,7 @@ class Capture:
         dataBitMap = win32ui.CreateBitmap()
         dataBitMap.CreateCompatibleBitmap(dcObj, self.window['width'], self.window['height'])
         cDC.SelectObject(dataBitMap)
-        cDC.BitBlt((0,0),(self.window['width'], self.window['height']) , dcObj, (x_0, y_0), win32con.SRCCOPY)
+        cDC.BitBlt((0,0),(self.window['width'], self.window['height']) , dcObj, (X_0, Y_0), win32con.SRCCOPY)
 
         # Conversion to cv2-compaitible
         signedIntsArray = dataBitMap.GetBitmapBits(True)
@@ -164,13 +169,25 @@ class Capture:
 
         return image
     
-    def record(self, path, fourcc, frame_rate=28, duration=0, x0=x_0, x1=None, y0=y_0, y1=None):
+    def record(self, path, fourcc, frame_rate=28, duration=0, x0=X_0, x1=None, y0=Y_0, y1=None):
+        """
+        Records the game
+        Args:
+            path : path to save the file to
+            fourcc : fourcc object (Look at __init__)
+            frame_rate (int, optional): fps of the video saved. Defaults to 28.
+            duration (int, optional): duration of recording. Defaults to 0.
+            x0 : width start. Defaults to X_0.
+            x1 : width end. Defaults to None.
+            y0 : height start. Defaults to Y_0.
+            y1 : height end. Defaults to None.
+        """
         def convert_cv2_obj(image):
             """Convert image to cv2 object instead of nparray"""
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            
             return image
+
         if x1 is None:
             x1 = self.window['width']
         if y1 is None:
@@ -201,12 +218,18 @@ class Capture:
             
             #Test FPS
             frames += 1
-        print("Frames collected: {}".format(frames))
+        print(f"Frames collected: {frames}")
         
         out.release()
         cv2.destroyAllWindows()
             
     def record_rune(self, path, duration):
+        """
+        Crops image to rune area and records focal area
+        Args:
+            path : path to save file
+            duration : number of seconds to record
+        """
         height = self.window['height']
         width = self.window['width']
         frame_rate = 322.0

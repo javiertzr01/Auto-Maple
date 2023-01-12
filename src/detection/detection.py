@@ -130,9 +130,9 @@ if __name__ == '__main__':
     # MMT_HEIGHT = max(MM_TL_TEMPLATE.shape[0], MM_BR_TEMPLATE.shape[0]) #22
     # MMT_WIDTH = max(MM_TL_TEMPLATE.shape[1], MM_BR_TEMPLATE.shape[1]) #37
     # monitor = {'top': 0, 'left': 0, 'width': 1366, 'height': 768}
-    model = load_model()
+    test_model = load_model()
     frame = cv2.imread('test.jpg')
-    preload_cudnn(model, frame)
+    preload_cudnn(test_model, frame)
     while True:
-        arrows = merge_detection(model, frame)
+        arrows = merge_detection(test_model, frame)
         print(arrows)
