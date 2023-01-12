@@ -1,0 +1,10 @@
+GitPython==3.1.30
+keyboard==0.13.5
+mss==7.0.1
+numpy==1.24.1
+opencv_python_headless==4.7.0.68
+Pillow==9.4.0
+pygame==2.1.2
+pywin32==305
+tensorflow==2.10.1
+tensorflow_gpu==2.10.1

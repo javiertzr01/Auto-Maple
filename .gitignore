@@ -1,0 +1,18 @@
+__pycache__/
+.idea/
+.settings/
+*.iml
+.vscode/
+env/
+assets/data
+src/detection/extra
+
+# Personal Files
+preload_image.jpg
+test.mp4
+resources/routines/windbreaker/
+resources/routines/windbreaker/
+assets/video
+.env
+assets/bot detector
+test_record.mp4
