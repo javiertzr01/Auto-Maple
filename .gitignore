@@ -3,14 +3,12 @@ __pycache__/
 .settings/
 *.iml
 .vscode/
-env/
-assets/data
 
 # Personal Files
-preload_image.jpg
-test.mp4
+env/
 resources/routines/windbreaker/
+assets/data
 assets/video
-.env
 assets/bot detector
-test_record.mp4
+.env
+

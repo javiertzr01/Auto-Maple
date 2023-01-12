@@ -205,6 +205,9 @@ Changes Added:
   Added Move Tolerance and Adjust Tolerance to the GUI - Controls the radius of the circle in the map
 </li>
 <li>
+  Implemented a faster screenshot method
+</li>
+<li>
   Added a record feature to record the game
 </li>
 <li>
