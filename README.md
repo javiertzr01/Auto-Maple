@@ -210,7 +210,3 @@ Changes Added:
 <li>
   Added a telegram bot that will send failed runes to the telegram chat for solving
 </li>
-
-#� �a�u�t�o�-�m�a�p�l�e�
-�
-�
