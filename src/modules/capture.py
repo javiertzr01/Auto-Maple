@@ -174,6 +174,7 @@ class Capture:
     def re_encode(self, path, frames, duration):
         """
         Re-encode the video for accurate fps on video
+        NOTE: Unused for now. Causes too much overhead
         Args:
             path : path to save the file to
             frame_rate : accurate frame rate
@@ -268,7 +269,7 @@ class Capture:
         out.release()
 
         # if need to re-encode for smooth picture
-        self.re_encode(path, frames, duration)
+        # self.re_encode(path, frames, duration)
         cv2.destroyAllWindows()
             
     def record_rune(self, path, duration):

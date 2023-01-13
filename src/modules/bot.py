@@ -2,7 +2,8 @@
 
 import threading
 import time
-from os.path import join
+from os.path import join, exists
+from os import makedirs, remove
 from datetime import datetime
 
 import cv2
@@ -138,15 +139,19 @@ class Bot(Configurable):
 
         if not self.solve_rune_success:
             config.telegram.waiting_response = True
-            dir_path = join('assets','video')
             video_name = datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3] + '.mp4'
-            path_for_video = join(dir_path, video_name)
+            folder = join ('assets', 'temp')
+            path = join(folder, video_name)
+
+            # Make 'assets/temp' directory if it doesn't exist
+            if not exists(folder):
+                makedirs(folder)
+
              # Send Telegram video
             duration = 1.5
-            config.capture.record_rune(path_for_video, duration=duration)
+            config.capture.record_rune(path, duration=duration)
             time.sleep(duration)
-            config.telegram.send_rune_video(path_for_video)
-            # TODO: create directory called temp(instead of video) then after send, delete both
+            config.telegram.send_rune_video(path)
             now = time.time()
             while time.time()-now < (12-duration):
                 if len(config.telegram.manual_replies) == 4:
@@ -155,6 +160,11 @@ class Bot(Configurable):
                     break
             config.telegram.waiting_response = False
             config.telegram.manual_replies.clear()
+
+            # Delete temp video
+            if exists(path):
+                remove(path)
+            
 
     def load_commands(self, file):
         """

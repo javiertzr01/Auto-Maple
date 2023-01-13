@@ -8,7 +8,7 @@ __pycache__/
 env/
 resources/routines/windbreaker/
 assets/data
-assets/video
+assets/temp_videos
 assets/bot detector
 assets/Screenshots
 .env

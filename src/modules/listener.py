@@ -3,7 +3,8 @@
 import time
 import threading
 import winsound
-from os.path import join
+from os.path import join, exists
+from os import makedirs
 from datetime import datetime
 
 import keyboard as kb
@@ -127,12 +128,14 @@ class Listener(Configurable):
     
     @staticmethod
     def screenshot():
-        # TODO: Make Directory if Screenshots is not available
-        
         image = config.capture.frame
         
         now = datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3] + '.png'
-        path = join('assets', 'Screenshots', now)
+        folder = join ('assets', 'Screenshots')
+        path = join(folder, now)
+        
+        if not exists(folder):
+            makedirs(folder)
         
         cv2.imwrite(path, image)
         
@@ -144,7 +147,11 @@ class Listener(Configurable):
         print("Started Recording")
         config.listener.recording = True
         now = datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3] + '.mp4'
-        path = join('assets', 'Recordings', now)
+        folder = join ('assets', 'Recordings')
+        path = join(folder, now)
+        
+        if not exists(folder):
+            makedirs(folder)
         time.sleep(0.6)
         
         config.capture.record(path)
