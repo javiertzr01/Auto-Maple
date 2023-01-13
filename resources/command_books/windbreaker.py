@@ -19,7 +19,8 @@ class Key:
     CYGNUS_KNIGHTS = '0'
     SHARP_EYES = '-'
     STORM_BRINGER = '='
-    STORM_WINDS = 'f9'
+    STORM_WINDS = '9'
+    GLORY_OF_GUARDIANS = '8'
 
     # Buffs Toggle
     ELEMENT_INFUSION = 'home'
@@ -142,9 +143,12 @@ class Buff(Command):
         now = time.time()
 
         if self.cd120_buff_time == 0 or now - self.cd120_buff_time > 120:
+            time.sleep(0.2)
             press(Key.STORM_WINDS, 2)
+            time.sleep(0.5)
+            press(Key.GLORY_OF_GUARDIANS, 2)
             self.cd120_buff_time = now
-            time.sleep(0.15)
+            time.sleep(0.5)
         # if self.cd180_buff_time == 0 or now - self.cd180_buff_time > 180:
 	    #     press(Key.WEAPON_AURA, 2)
 	    #     press(Key.LEGACY_RESTORATION, 2)
