@@ -117,7 +117,7 @@ class Bot(Configurable):
 
         print('\nSolving rune:')
         inferences = []
-        # TODO: Remove before pushing to main
+        # TODO: Change to 0 before pushing to main
         fail_count = 2
         for _ in range(15):
             if fail_count < 2:
