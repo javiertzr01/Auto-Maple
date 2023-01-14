@@ -148,7 +148,7 @@ class Bot(Configurable):
                 makedirs(folder)
 
              # Send Telegram video
-            duration = 1.25
+            duration = 1
             config.capture.record_rune(path, duration=duration)
             time.sleep(duration)
             config.telegram.send_rune_video(path)

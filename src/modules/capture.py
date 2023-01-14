@@ -238,6 +238,10 @@ class Capture:
         frame_width = x1 - x0
         frame_height = y1 - y0
         
+        # DEBUG
+        print(f"Frame Width: {frame_width}")
+        print(f"Frame Height: {frame_height}")
+        
         out = cv2.VideoWriter(path, self.fourcc, frame_rate, (frame_width, frame_height))
         
         time_diff = 0
@@ -255,6 +259,10 @@ class Capture:
             elif time_diff >= duration:
                 break
             cropped = self.frame[y0:y1, x0:x1]
+            # DEBUG
+            cv2.imshow("crop", cropped)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
             cropped = convert_cv2_obj(cropped)
             
             # cv2.imshow('test_record', cropped)
@@ -269,7 +277,7 @@ class Capture:
         out.release()
 
         # if need to re-encode for smooth picture
-        # self.re_encode(path, frames, duration)
+        self.re_encode(path, frames, duration)
         cv2.destroyAllWindows()
             
     def record_rune(self, path, duration):
@@ -281,9 +289,16 @@ class Capture:
         """
         height = self.window['height']
         width = self.window['width']
+        preset_height = 1080
+        preset_width = 1920
+        height_ratio = height/preset_height
+        width_ratio = width/preset_width
         frame_rate = 322.0
         y0 = 110
         y1 = (height//3) - 30
         x0 = (width//3) + 20
-        x1 = (4*width//6) - 30
+        x1 = (4 * width//6) - 30
+        
+        # DEBUG:
+        print (f"y0:{y0}, y1:{y1}, x0:{x0}, x1{x1}")
         self.record(path, frame_rate, duration=duration, x0=x0, x1=x1, y0=y0, y1=y1)
