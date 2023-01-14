@@ -237,10 +237,7 @@ class Capture:
             y1 = self.window['height']
         frame_width = x1 - x0
         frame_height = y1 - y0
-        
-        # DEBUG
-        print(f"Frame Width: {frame_width}")
-        print(f"Frame Height: {frame_height}")
+        print(f"frame_width = {frame_width}, frame_height = {frame_height}")
         
         out = cv2.VideoWriter(path, self.fourcc, frame_rate, (frame_width, frame_height))
         
@@ -259,13 +256,8 @@ class Capture:
             elif time_diff >= duration:
                 break
             cropped = self.frame[y0:y1, x0:x1]
-            # DEBUG
-            cv2.imshow("crop", cropped)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
             cropped = convert_cv2_obj(cropped)
             
-            # cv2.imshow('test_record', cropped)
             # Pass image to VideoWriter
             out.write(cropped)
             time_diff = time.time() - start
@@ -276,7 +268,7 @@ class Capture:
         
         out.release()
 
-        # if need to re-encode for smooth picture
+        # If need to re-encode for smooth picture
         self.re_encode(path, frames, duration)
         cv2.destroyAllWindows()
             
@@ -287,18 +279,18 @@ class Capture:
             path : path to save file
             duration : number of seconds to record
         """
-        height = self.window['height']
+        height = self.window['height']  # Resolution height + 1
         width = self.window['width']
-        preset_height = 1080
-        preset_width = 1920
-        height_ratio = height/preset_height
-        width_ratio = width/preset_width
+        
+        rune_height = 200
+        rune_width = 650
+        
         frame_rate = 322.0
         y0 = 110
-        y1 = (height//3) - 30
-        x0 = (width//3) + 20
-        x1 = (4 * width//6) - 30
+        y1 = y0 + rune_height
+        x0 = int(width/2 - rune_width/2)
+        x1 = x0 + rune_width
         
         # DEBUG:
-        print (f"y0:{y0}, y1:{y1}, x0:{x0}, x1{x1}")
+        print (f"y0:{y0}, y1:{y1}, x0:{x0}, x1:{x1}")
         self.record(path, frame_rate, duration=duration, x0=x0, x1=x1, y0=y0, y1=y1)
