@@ -33,6 +33,9 @@ OTHER_TEMPLATE = cv2.cvtColor(other_filtered, cv2.COLOR_BGR2GRAY)
 # The Elite Boss's warning sign
 ELITE_TEMPLATE = cv2.imread('assets/elite_template.jpg', 0)
 
+# Violetta starting detector
+VIOLETTA_TEMPLATE =cv2.imread('assets/violetta_template.png', 0)
+
 
 def get_alert_path(name):
     return os.path.join(Notifier.ALERTS_DIR, f'{name}.mp3')
@@ -106,6 +109,11 @@ class Notifier:
                         self._ping('rune_appeared', volume=0.75)
                 elif now - rune_start_time > self.rune_alert_delay:     # Alert if rune hasn't been solved
                     config.bot.rune_active = False
+                    self._alert('siren')
+                    
+                # Check for violetta lie detector
+                violetta = utils.multi_match(elite_frame, ELITE_TEMPLATE, threshold=0.9)
+                if len(violetta) > 0:
                     self._alert('siren')
             time.sleep(0.05)
 
