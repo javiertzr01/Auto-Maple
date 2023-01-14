@@ -1,8 +1,9 @@
 """Interfaces that are used by various GUI pages."""
 
 import tkinter as tk
-import keyboard as kb
 from tkinter import ttk
+import keyboard as kb
+
 from src.common import utils
 from src.common.interfaces import Configurable
 

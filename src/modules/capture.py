@@ -237,6 +237,8 @@ class Capture:
             y1 = self.window['height']
         frame_width = x1 - x0
         frame_height = y1 - y0
+        
+        # TODO: Remove before pushing to main
         print(f"frame_width = {frame_width}, frame_height = {frame_height}")
         
         out = cv2.VideoWriter(path, self.fourcc, frame_rate, (frame_width, frame_height))
@@ -264,6 +266,7 @@ class Capture:
             
             #Test FPS
             frames += 1
+        # TODO: Remove before pushing to main
         print(f"Frames collected: {frames}")
         
         out.release()
@@ -279,7 +282,6 @@ class Capture:
             path : path to save file
             duration : number of seconds to record
         """
-        height = self.window['height']  # Resolution height + 1
         width = self.window['width']
         
         rune_height = 200
@@ -291,6 +293,6 @@ class Capture:
         x0 = int(width/2 - rune_width/2)
         x1 = x0 + rune_width
         
-        # DEBUG:
+        # TODO: Remove before pushing to main
         print (f"y0:{y0}, y1:{y1}, x0:{x0}, x1:{x1}")
         self.record(path, frame_rate, duration=duration, x0=x0, x1=x1, y0=y0, y1=y1)
