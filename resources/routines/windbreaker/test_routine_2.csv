@@ -1,0 +1,25 @@
+
+@, label=Main
+$, target=move_tolerance, value=0.05
+*, x=0.593, y=0.3, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=left, attacks=1, repetitions=1
+
+@, label=Main2
+*, x=0.537, y=0.35, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.603, y=0.360, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+
+@, label=Main3
+*, x=0.589, y=0.440, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.416, y=0.449, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=right, attacks=1, repetitions=1

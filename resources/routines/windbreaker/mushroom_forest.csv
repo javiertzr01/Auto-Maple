@@ -1,0 +1,45 @@
+$, target=move_tolerance, value=0.04
+
+@, label=top
+*, x=0.562, y=0.129, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    Wait, duration=0.1
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Fall, distance=0.01
+    Wait, duration=0.2
+
+@, label=middle
+*, x=0.562, y=0.196, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    Wait, duration=0.1
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Fall, distance=0.01
+    Wait, duration=0.2
+
+@, label=bottom
+*, x=0.562, y=0.263, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    Wait, duration=0.1
+    WindFlourish, direction=left, attacks=2, repetitions=1
+*, x=0.406, y=0.263, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Wait, duration=0.1
+    WindFlourish, direction=right, attacks=2, repetitions=1
+*, x=0.406, y=0.263, frequency=1, skip=False, adjust=True
+    GustShift, direction=up
+    Wait, duration=0.3
+
+@, label=middle_2
+*, x=0.406, y=0.196, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Wait, duration=0.1
+    WindFlourish, direction=right, attacks=2, repetitions=1
+*, x=0.442, y=0.196, frequency=1, skip=False, adjust=True
+    GustShift, direction=up
+    Wait, duration=0.5
+
+@, label=top_2
+*, x=0.496, y=0.129, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Wait, duration=0.1
+    WindFlourish, direction=right, attacks=2, repetitions=1

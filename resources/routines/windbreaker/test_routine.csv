@@ -1,0 +1,32 @@
+
+@, label=buff
+*, x=0.565, y=0.238, frequency=1, skip=False, adjust=True
+    Wait, duration=3
+    Buff
+>, label=Main, frequency=2, skip=False
+
+@, label=Main
+*, x=0.593, y=0.308, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=left, attacks=1, repetitions=1
+>, label=Main2, frequency=1, skip=False
+
+@, label=Main2
+*, x=0.537, y=0.360, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=left, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.603, y=0.360, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=right, attacks=1, repetitions=1
+>, label=Main3, frequency=1, skip=False
+
+@, label=Main3
+*, x=0.589, y=0.449, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.3
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.500, y=0.449, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.416, y=0.449, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=left, attacks=1, repetitions=1

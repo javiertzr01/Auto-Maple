@@ -1,0 +1,50 @@
+$, target=move_tolerance, value=0.06
+
+@, label=Top L-R
+*, x=0.234, y=0.241, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+    Wait, duration=0.15
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.441, y=0.241, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.621, y=0.241, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.8, y=0.241, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Fall, distance=0.01
+
+@, label=Middle R-L
+*, x=0.793, y=0.407, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.15
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.683, y=0.372, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.483, y=0.407, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.372, y=0.407, frequency=1, skip=False, adjust=True
+    Fall, distance=0.01
+
+@, label=Bottom L-R
+*, x=0.372, y=0.545, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+    Wait, duration=0.15
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.510, y=0.531, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+*, x=0.703, y=0.545, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.15
+    GustShift, direction=up
+
+@, label=Middle R-L-2
+*, x=0.793, y=0.407, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=1, repetitions=1
+    Wait, duration=0.15
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.683, y=0.372, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.483, y=0.407, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=1, repetitions=1
+*, x=0.372, y=0.407, frequency=1, skip=False, adjust=True
+    GustShift, direction=up

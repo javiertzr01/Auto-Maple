@@ -1,0 +1,27 @@
+*, x=0.284, y=0.368, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    GustShift, direction=up
+*, x=0.284, y=0.226, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    GustShift, direction=up
+*, x=0.284, y=0.090, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    WindFlourish, direction=right, attacks=2, repetitions=1
+*, x=0.381, y=0.090, frequency=1, skip=False, adjust=True
+*, x=0.626, y=0.090, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Fall, distance=0.02
+*, x=0.600, y=0.226, frequency=1, skip=False, adjust=True
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    Fall, distance=0.02
+*, x=0.600, y=0.368, frequency=1, skip=False, adjust=False
+*, x=0.794, y=0.368, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=right, attacks=2, repetitions=1
+    WindFlourish, direction=left, attacks=2, repetitions=1
+*, x=0.510, y=0.368, frequency=1, skip=False, adjust=False
+    WindFlourish, direction=left, attacks=2, repetitions=1
+    WindFlourish, direction=right, attacks=2, repetitions=1
