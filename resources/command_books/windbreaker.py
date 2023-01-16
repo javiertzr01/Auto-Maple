@@ -187,7 +187,7 @@ class GustShift(Command):
         press(Key.GUST_SHIFT, 1)
         press(Key.GUST_SHIFT, 1)
         key_up(self.direction)
-        time.sleep(0.5)
+        time.sleep(1)
 
 class WindFlourish(Command):
     """ Wind Breaker's Main Mobbing skill"""
@@ -208,6 +208,6 @@ class WindFlourish(Command):
             press(Key.WIND_FLOURISH, self.attacks, up_time=0.05)
         key_up(self.direction)
         if self.attacks > 2:
-            time.sleep(0.3)
+            time.sleep(0.4)
         else:
-            time.sleep(0.2)
+            time.sleep(0.3)

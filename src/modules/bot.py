@@ -118,7 +118,7 @@ class Bot(Configurable):
         print('\nSolving rune:')
         inferences = []
         # TODO: Change to 0 before pushing to main
-        fail_count = 2
+        fail_count = 0
         for _ in range(15):
             if fail_count < 2:
                 frame = config.capture.frame
