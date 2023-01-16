@@ -112,7 +112,8 @@ class Notifier:
                     self._alert('siren')
                     
                 # Check for violetta lie detector
-                violetta = utils.multi_match(elite_frame, ELITE_TEMPLATE, threshold=0.9)
+                violetta_frame = frame[10 * height // 16 : 15 * height // 16, 9 * width // 10 : width]
+                violetta = utils.multi_match(violetta_frame, VIOLETTA_TEMPLATE, threshold=0.9)
                 if len(violetta) > 0:
                     self._alert('siren')
             time.sleep(0.05)

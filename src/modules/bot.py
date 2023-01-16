@@ -134,6 +134,8 @@ class Bot(Configurable):
                         inferences.append(solution)
                     else:
                         fail_count += 1
+                else:
+                    fail_count += 1
             else:
                 self.solve_rune_success = False
                 break

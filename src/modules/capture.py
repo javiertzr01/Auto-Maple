@@ -272,7 +272,7 @@ class Capture:
         out.release()
 
         # If need to re-encode for smooth picture
-        self.re_encode(path, frames, duration)
+        # self.re_encode(path, frames, duration)
         cv2.destroyAllWindows()
             
     def record_rune(self, path, duration):

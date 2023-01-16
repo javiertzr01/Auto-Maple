@@ -106,8 +106,16 @@ def merge_detection(model, image):
 
     # Preprocessing
     height, width, channels = image.shape
+    rune_height = 200
+    rune_width = 650
+    
+    y0 = 110
+    y1 = y0 + rune_height
+    x0 = int(width/2 - rune_width/2)
+    x1 = x0 + rune_width
+    
 
-    cropped = image[150:height//3, width//3:4*width//6]
+    cropped = image[y0:y1, x0:x1]
     grayed = gray(cropped)
 
     # Isolate the rune box
