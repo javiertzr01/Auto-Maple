@@ -36,6 +36,13 @@ ELITE_TEMPLATE = cv2.imread('assets/elite_template.jpg', 0)
 # Violetta starting detector
 VIOLETTA_TEMPLATE =cv2.imread('assets/violetta_template.png', 0)
 
+# Type lie detector
+LIE_DETECTOR_CAPTCHA_TEMPLATE = cv2.imread('assets/lie_detector_1.png', 0)
+
+# Click lie detector
+LIE_DETECTOR_CLICK_TEMPLATE = []
+
+
 
 def get_alert_path(name):
     return os.path.join(Notifier.ALERTS_DIR, f'{name}.mp3')
@@ -56,6 +63,13 @@ class Notifier:
 
         self.room_change_threshold = 0.9
         self.rune_alert_delay = 270         # 4.5 minutes
+        
+        # Setup for checking click lie detector
+        directory = 'assets\\lie_detector'
+        for filename in os.listdir(directory):
+            file = os.path.join(directory, filename)
+            template = cv2.imread(file, 0)
+            LIE_DETECTOR_CLICK_TEMPLATE.append(template)
 
     def start(self):
         """Starts this Notifier's thread."""
@@ -116,6 +130,20 @@ class Notifier:
                 violetta = utils.multi_match(violetta_frame, VIOLETTA_TEMPLATE, threshold=0.9)
                 if len(violetta) > 0:
                     self._alert('siren')
+
+                # Check for captcha lie detector
+                lie_detector_captcha = utils.multi_match(frame, LIE_DETECTOR_CAPTCHA_TEMPLATE, threshold=0.8)
+                if len(lie_detector_captcha) > 0:
+                    self._alert('siren')
+
+                # Check for click lie detector
+                lie_detector_click = []
+                for template in LIE_DETECTOR_CAPTCHA_TEMPLATE:
+                    match_result = utils.multi_match(frame, template, threshold=0.8)
+                    lie_detector_click.extend(match_result)
+                if len(lie_detector_click) > 0:
+                    self._alert('siren')
+                lie_detector_click.clear()
             time.sleep(0.05)
 
     def _alert(self, name, volume=0.75):
